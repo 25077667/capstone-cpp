@@ -44,3 +44,10 @@ int main() {
     return 0;
 }
 ```
+
+### On your CMakeLists.txt
+```cmake
+add_executable(your_executable main.cpp)
+target_include_directories(your_executable PRIVATE ${CAPSTONE_WRAPPER_INCLUDE_DIR})
+target_link_libraries(your_executable ${CAPSTONE_WRAPPER_LIBRARY})
+```
