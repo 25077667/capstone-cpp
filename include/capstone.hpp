@@ -5,6 +5,19 @@
 #include <vector>
 #include <string>
 
+// defined DEPRECATED macro
+#if __cplusplus >= 201402L
+#define DEPRECATED [[deprecated]]
+#else
+#if defined(__GNUC__) || defined(__clang__)
+#define DEPRECATED __attribute__((deprecated))
+#elif defined(_MSC_VER)
+#define DEPRECATED __declspec(deprecated)
+#else
+#pragma message("WARNING: You need to implement DEPRECATED for this compiler")
+#endif
+#endif // __cplusplus >= 201402L
+
 namespace Capstone
 {
     enum class Arch : uint8_t
@@ -116,7 +129,8 @@ namespace Capstone
          *
          * @exception std::runtime_error: when disassembling failed
          */
-        std::vector<Instruction> disasm(const std::string &code);
+        DEPRECATED std::vector<Instruction> disasm(const std::string &code);
+        std::vector<Instruction> disasm(const std::vector<uint8_t> &code);
 
     private:
         using csh = size_t; // The underlying type of handle is size_t in the original capstone-engine

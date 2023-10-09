@@ -24,11 +24,32 @@ int Capstone::Capstone::set_option(int type, size_t value) noexcept
     return cs_option(handle, static_cast<cs_opt_type>(type), value);
 }
 
-std::vector<Instruction> Capstone::Capstone::disasm(const std::string &code)
+DEPRECATED std::vector<Instruction> Capstone::Capstone::disasm(const std::string &code)
 {
     size_t count;
     cs_insn *insn;
     count = cs_disasm(handle, reinterpret_cast<const uint8_t *>(code.data()), code.size(), 0, 0, &insn);
+    if (count <= 0)
+        throw std::runtime_error("Failed on cs_disasm()");
+
+    std::vector<Instruction> insns;
+    for (size_t i = 0; i < count; i++)
+    {
+        insns.emplace_back(
+            Instruction{
+                std::string(insn[i].mnemonic),
+                std::string(insn[i].op_str)});
+    }
+
+    cs_free(insn, count);
+    return insns;
+}
+
+std::vector<Instruction> Capstone::Capstone::disasm(const std::vector<uint8_t> &code)
+{
+    size_t count;
+    cs_insn *insn;
+    count = cs_disasm(handle, code.data(), code.size(), 0, 0, &insn);
     if (count <= 0)
         throw std::runtime_error("Failed on cs_disasm()");
 
