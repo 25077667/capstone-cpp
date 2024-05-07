@@ -35,8 +35,14 @@ DEPRECATED std::vector<Instruction> Capstone::Capstone::disasm(const std::string
     std::vector<Instruction> insns;
     for (size_t i = 0; i < count; i++)
     {
+        std::array<uint8_t, 24> bytes_{0};
+        std::copy(insn[i].bytes, insn[i].bytes + insn[i].size, bytes_.begin());
         insns.emplace_back(
             Instruction{
+                insn[i].id,
+                insn[i].address,
+                insn[i].size,
+                bytes_,
                 std::string(insn[i].mnemonic),
                 std::string(insn[i].op_str)});
     }
@@ -56,8 +62,14 @@ std::vector<Instruction> Capstone::Capstone::disasm(const std::vector<uint8_t> &
     std::vector<Instruction> insns;
     for (size_t i = 0; i < count; i++)
     {
+        std::array<uint8_t, 24> bytes_{0};
+        std::copy(insn[i].bytes, insn[i].bytes + insn[i].size, bytes_.begin());
         insns.emplace_back(
             Instruction{
+                insn[i].id,
+                insn[i].address,
+                insn[i].size,
+                bytes_,
                 std::string(insn[i].mnemonic),
                 std::string(insn[i].op_str)});
     }

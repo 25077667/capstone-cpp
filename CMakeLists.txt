@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.14 FATAL_ERROR)
 set(PROJECT_NAME capstone-wrapper)
 set(PROJECT_NAME_CAPITAL CAPSTONE_WRAPPER)
 
-project(${PROJECT_NAME} VERSION 0.1.4 LANGUAGES CXX)
+project(${PROJECT_NAME} VERSION 0.1.5 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 11)
 
 include(cmake/CPM.cmake)

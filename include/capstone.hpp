@@ -4,6 +4,7 @@
 #include <cstdint>
 #include <vector>
 #include <string>
+#include <array>
 
 // defined DEPRECATED macro
 #if __cplusplus >= 201402L
@@ -151,7 +152,14 @@ namespace Capstone
     public:
         Instruction() = default;
         ~Instruction() = default;
+        Instruction(uint32_t id, uint64_t address, uint16_t size, std::array<uint8_t, 24> bytes, std::string mnemonic, std::string op_str)
+            : id(id), address(address), size(size), bytes(bytes), mnemonic(mnemonic), op_str(op_str) {}
 
+        // Similar to cs_insn, please refer to the source code of capstone for more details
+        uint32_t id = 0;                  // The id of instruction, e.g. X86_INS_MOV (which is defined typedef in enum x86_insn)
+        uint64_t address = -1;            // The address of instruction
+        uint16_t size = 0;                // The size of this instruction, which is the number of bytes
+        std::array<uint8_t, 24> bytes{0}; // The bytes of instruction, the number of bytes is determined by size
         std::string mnemonic;
         std::string op_str;
     };
