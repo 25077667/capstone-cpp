@@ -1,5 +1,5 @@
 set(INCLUDE_DITS 
-    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../include
     ${capstone_SOURCE_DIR}/include
 )
 
